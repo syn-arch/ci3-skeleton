@@ -33,17 +33,6 @@ class Ppdb extends CI_Controller {
 		$this->load->view('template/footer');
 	}
 
-	// gelombang pendaftaran
-
-	public function gelombang_pendaftaran()
-	{
-		$data['judul'] = "Gelombang Pendaftaran";
-
-		$this->load->view('template/header', $data);
-		$this->load->view('ppdb/gelombang_pendaftaran/index', $data);
-		$this->load->view('template/footer');
-	}
-
 
 	// Calon siswa
 

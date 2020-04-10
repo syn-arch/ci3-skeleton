@@ -226,6 +226,11 @@
         // tahun akademik
         $(document).on('click', '.hapus_tahun_akademik', function(){
           hapus($(this).data('href'))
+
+        // gelombang pendaftaran
+        })
+        $(document).on('click', '.hapus_gelombang_pendaftaran', function(){
+          hapus($(this).data('href'))
         })
 
 

@@ -7,14 +7,14 @@ class Tahun_akademik extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('datatables');
-		$this->load->model('Tahun_akademik_m','tm');
+		$this->load->model('Tahun_akademik_m','tam');
 		cek_login();
 	}
 
 	public function index()
 	{
 		$data['judul'] = "Tahun Akademik";
-		$data['tahun_akademik'] = $this->tm->get_tahun_akademik();
+		$data['tahun_akademik'] = $this->tam->get_tahun_akademik();
 
 		$this->load->view('template/header', $data);
 		$this->load->view('master/tahun_akademik/index', $data);
@@ -23,14 +23,14 @@ class Tahun_akademik extends CI_Controller {
 
 	public function hapus($id='')
 	{
-		$this->tm->delete($id);
+		$this->tam->delete($id);
 		$this->session->set_flashdata('pesan', 'dihapus');
 		redirect('master/tahun_akademik','refresh');
 	}
 
 	function get_tahun_akademik_json() {
 		header('Content-Type: application/json');
-		echo $this->tm->get_all_tahun_akademik();
+		echo $this->tam->get_all_tahun_akademik();
 	}
 
 	public function tambah()
@@ -42,7 +42,7 @@ class Tahun_akademik extends CI_Controller {
 		$valid->set_rules('semester_saat_ini','semester_saat_ini','required');
 
 		if ($valid->run()) {
-			$this->tm->insert();
+			$this->tam->insert();
 			$this->session->set_flashdata('pesan', 'ditambah');
 			redirect('master/tahun_akademik','refresh');
 		}
@@ -56,7 +56,7 @@ class Tahun_akademik extends CI_Controller {
 
 	public function get_tahun_akademik($id = '')
 	{
-		echo json_encode($this->tm->get_tahun_akademik($id));
+		echo json_encode($this->tam->get_tahun_akademik($id));
 	}
 
 	public function ubah($id_tahun_akademik)
@@ -68,13 +68,13 @@ class Tahun_akademik extends CI_Controller {
 		$valid->set_rules('semester_saat_ini','semester_saat_ini','required');
 
 		if ($valid->run()) {
-			$this->tm->update($id_tahun_akademik);
+			$this->tam->update($id_tahun_akademik);
 			$this->session->set_flashdata('pesan', 'diubah');
 			redirect('master/tahun_akademik','refresh');
 		}
 
 		$data['judul'] = "Ubah Tahun Akademik";
-		$data['tahun_akademik'] = $this->tm->get_tahun_akademik($id_tahun_akademik);
+		$data['tahun_akademik'] = $this->tam->get_tahun_akademik($id_tahun_akademik);
 
 		$this->load->view('template/header', $data);
 		$this->load->view('master/tahun_akademik/ubah', $data);
