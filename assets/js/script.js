@@ -1,8 +1,10 @@
-<script>
 
 	$(document).ready(function(){
 
+    var base_url = $('meta[name="BASE_URL"]').attr('content')
+
     $('.tables').DataTable()
+    $('.textarea').summernote()
 
     bsCustomFileInput.init();
 
@@ -26,6 +28,20 @@
     })
    }
 
+   function hapus(href){
+     swal({
+      title: "Apakah anda yakin?",
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        window.location = href
+      }
+    });
+  }
+
         // sub menu
         $('.form-menu').click(function() {
 
@@ -33,7 +49,7 @@
           var id_role = $(this).data('id_role');
 
           $.ajax({
-            url: "<?= base_url('role/ubah_akses_menu') ?>",
+            url: base_url + "role/ubah_akses_menu",
             type : 'post',
             data : {
               id_menu : id_menu,
@@ -53,7 +69,7 @@
           var id_role = $(this).data('id_role');
 
           $.ajax({
-            url: "<?= base_url('role/ubah_akses_submenu') ?>",
+            url: base_url + "role/ubah_akses_submenu",
             type : 'post',
             data : {
               id_submenu : id_submenu,
@@ -94,7 +110,7 @@
         	},
         	processing: true,
         	serverSide: true,
-        	ajax: {"url": "<?php echo base_url().'user/get_user_json'?>", "type": "POST"},
+        	ajax: {"url": base_url + "user/get_user_json", "type": "POST"},
         	columns: [
           {"data" : null},
           {"data": "nama_petugas"},
@@ -105,7 +121,7 @@
           {"data": "id_user",
           "render": function(data, type, row) {
            return `<a class="btn btn-warning ubah_user" href="#modal-user" data-toggle="modal" data-id='${data}'><i class="fa fa-edit"></i></a>
-           <a class="btn btn-danger hapus_user" data-href="<?php echo base_url('user/hapus/') ?>${data}"><i class="fa fa-trash"></i></a>`;
+           <a class="btn btn-danger hapus_user" data-href="${base_url}user/hapus/${data}"><i class="fa fa-trash"></i></a>`;
          }
        }
        ],
@@ -121,22 +137,12 @@
     });
 
         $(document).on('click', '.hapus_user', function(){
-        	swal({
-        		title: "Apakah anda yakin?",
-        		text: "Data yang dihapus tidak dapat dikembalikan!",
-        		icon: "warning",
-        		buttons: true,
-        		dangerMode: true,
-        	}).then((willDelete) => {
-        		if (willDelete) {
-        			window.location = $(this).data('href')
-        		}
-        	});
+        	hapus($this.data('href'))
         })
 
         $('.tambah-user').click(function(){
         	$('.modal-title').text('Tambah User')
-        	$('.form-user').attr('action', '<?php echo base_url("user/simpan") ?>')
+        	$('.form-user').attr('action', base_url + "user/simpan")
         	$('.nama_petugas').val('')
           $('.email').val('')
           $('.telepon').val('')
@@ -144,17 +150,17 @@
           $('.jk').val('pilih_jk')
           $('.petugas_img').hide()
           $('.username').val('')
-        	$('.password').val('')
+          $('.password').val('')
           $('.username').prop('disabled', false)
           $('.id_role').val('pilih_role')
         })
 
         $(document).on('click', '.ubah_user', function(){
         	var id = $(this).data('id')
-        	$.get("<?php echo base_url('user/get_user/') ?>" + id, function(datas){
+        	$.get(base_url + "user/get_user/" + id, function(datas){
         		var data = JSON.parse(datas)
         		$('.modal-title').text('Ubah User')
-        		$('.form-user').attr('action', '<?php echo base_url("user/ubah/") ?>' + data.id_user + '/' + data.id_petugas)
+        		$('.form-user').attr('action', base_url + "user/ubah/" + data.id_user + '/' + data.id_petugas)
         		$('.nama_petugas').val(data.nama_petugas)
             $('.alamat').val(data.alamat)
             $('.email').val(data.email)
@@ -164,7 +170,7 @@
             $('.username').prop('disabled', true)
             $('.password').attr('')
             $('.petugas_img').show()
-            $('.petugas_img').attr('src', '<?php echo base_url('assets/img/') ?>' + data.gambar)
+            $('.petugas_img').attr('src', base_url + "assets/img/" + data.gambar)
             $('.id_role').val(data.id_role)
           })
         })
@@ -172,20 +178,55 @@
 
         // Role
         $(document).on('click', '.hapus_role', function(){
-          swal({
-            title: "Apakah anda yakin?",
-            text: "Data yang dihapus tidak dapat dikembalikan!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          }).then((willDelete) => {
-            if (willDelete) {
-              window.location = $(this).data('href')
-            }
-          });
+          hapus($(this).data('href'))
+        })
+
+        // jurusan
+        $("#table-jurusan").dataTable({
+          initComplete: function() {
+            var api = this.api();
+            $('#mytable_filter input')
+            .off('.DT')
+            .on('input.DT', function() {
+              api.search(this.value).draw();
+            });
+          },
+          oLanguage: {
+            sProcessing: "loading..."
+          },
+          processing: true,
+          serverSide: true,
+          ajax: {"url": base_url + 'master/get_jurusan_json', "type": "POST"},
+          columns: [
+          {"data" : null},
+          {"data": "nama_jurusan"},
+          {"data": "singkatan"},
+          {"data": "id_jurusan",
+          "render": function(data, type, row) {
+           return `<a class="btn btn-warning" href="${base_url}master/ubah_jurusan/${data}"><i class="fa fa-edit"></i></a>
+           <a class="btn btn-danger hapus_jurusan" data-href="${base_url}master/hapus_jurusan/${data}"><i class="fa fa-trash"></i></a>`;
+         }
+       }
+       ],
+       order: [[1, 'asc']],
+       rowCallback: function(row, data, iDisplayIndex) {
+        var info = this.fnPagingInfo();
+        var page = info.iPage;
+        var length = info.iLength;
+        var index = page * length + (iDisplayIndex + 1);
+        $('td:eq(0)', row).html(index);
+      }
+
+    });
+
+        $(document).on('click', '.hapus_jurusan', function(){
+          hapus($(this).data('href'))
+        })
+
+        // tahun akademik
+        $(document).on('click', '.hapus_tahun_akademik', function(){
+          hapus($(this).data('href'))
         })
 
 
       });
-
-    </script>

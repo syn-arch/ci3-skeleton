@@ -19,7 +19,8 @@
 								<tr>
 									<td><?php echo $row['nama_menu'] ?>
 									<table>
-										<?php $id_menu = $row['id_menu']; $submenu = $this->db->get_where('submenu',['id_menu' => $id_menu ])->result_array(); ?>
+
+										<?php $id_menu = $row['id_menu']; $this->db->order_by('urutan','asc'); $submenu = $this->db->get_where('submenu',['id_menu' => $id_menu ])->result_array(); ?>
 										<?php foreach ($submenu as $row_submenu): ?>
 											<tr>
 												<td><?php echo $row_submenu['nama_submenu'] ?></td>

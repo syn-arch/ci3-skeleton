@@ -32,6 +32,7 @@ class Role extends CI_Controller {
 	public function ubah($id = '')
 	{
 		$data['judul'] = "Ubah Akses Role";
+						$this->db->order_by('urutan', 'asc');
 		$data['menu'] = $this->db->get('menu')->result_array();
 
 		$this->load->view('template/header', $data, FALSE);		

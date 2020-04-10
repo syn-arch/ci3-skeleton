@@ -8,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="BASE_URL" content="<?php echo base_url() ?>">
 
   <title><?php echo $judul ?></title>
 
@@ -18,7 +19,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('vendor/sweetalert2/') ?>">
+  <!-- summernote -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>plugins/summernote/summernote-bs4.css">
+  <!-- custom css -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css') ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -65,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
            $id_user = $this->session->userdata('id_user');
            $id_role = $this->session->userdata('id_role');
 
-           $sql = "SELECT * FROM role_access_menu JOIN menu USING(id_menu) WHERE role_access_menu.id_role = '$id_role' ";
+           $sql = "SELECT * FROM role_access_menu JOIN menu USING(id_menu) WHERE role_access_menu.id_role = '$id_role' ORDER BY menu.urutan ";
            $menu = $this->db->query($sql)->result_array();
            ?>
 
@@ -126,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                <?php 
                $id_menu = $row['id_menu'];
-               $sql = "SELECT nama_submenu,submenu.url as url FROM submenu JOIN menu USING(id_menu) WHERE menu.id_menu = '$id_menu' ";
+               $sql = "SELECT nama_submenu,submenu.url as url FROM role_access_submenu JOIN submenu USING(id_submenu) JOIN menu USING(id_menu) WHERE menu.id_menu = '$id_menu' ORDER BY submenu.urutan ";
                $submenu = $this->db->query($sql)->result_array();
                ?>
 

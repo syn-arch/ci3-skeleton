@@ -6,6 +6,7 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		cek_login();
 		$this->load->library('datatables');
 		$this->load->model('User_m','um');
 		$this->load->model('Role_m','rm');

@@ -88,7 +88,7 @@
     var error = $('.alert-message-error').text()
 
     if (error != '') {
-      swal('Berhasil!', error, 'error')
+      swal('Error!', error, 'error')
     }
   </script>
 

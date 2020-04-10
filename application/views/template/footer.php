@@ -31,7 +31,11 @@
 <script src="<?php echo base_url('vendor/lte/') ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- bs-custom-file-input -->
 <script src="<?php echo base_url('vendor/lte/') ?>plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- sweeta alert -->
 <script src="<?php echo base_url('vendor/sweetalert/') ?>sweetalert.min.js"></script>
-<?php include 'script.php'; ?>
+<!-- Summernote -->
+<script src="<?php echo base_url('vendor/lte/') ?>plugins/summernote/summernote-bs4.min.js"></script>
+<!-- custom js -->
+<script src="<?php echo base_url('assets/js/') ?>script.js"></script>
 </body>
 </html>

@@ -8,14 +8,21 @@ function cek_login()
     } else {
 
         $id_role = $ci->session->userdata('id_role');
-        $id_menu = $ci->db->get_where('menu', ['url' => $ci->uri->segment(1) ])->row_array()['id_menu'];
+
+        $menu = $ci->db->get_where('menu', ['url' => $ci->uri->segment(1) ])->row_array();
+
+        if (!$menu) {
+            show_404();
+        }
 
         $userAccess = $ci->db->get_where('role_access_menu', [
             'id_role' => $id_role,
-            'id_menu' => $id_menu
-        ]);
+            'id_menu' => $menu['id_menu']
+        ])->row_array();
 
-        if ($userAccess->num_rows() < 1) {
+        if (!$userAccess) {
+            echo "403 unauthorized";
+            die;
             show_404();
         }
     }
