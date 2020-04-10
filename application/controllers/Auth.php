@@ -21,6 +21,7 @@ class Auth extends CI_Controller {
 			$username = $post['username'];
 			$password = $post['password'];
 
+					$this->db->join('petugas', 'id_user');
 			$user = $this->db->get_where('user', ['username' => $username])->row_array();
 
 			if ($user) {
@@ -31,7 +32,9 @@ class Auth extends CI_Controller {
 						'login' => true,
 						'id_user' => $user['id_user'],
 						'username' => $user['username'],
-						'id_role' => $user['id_role']
+						'id_role' => $user['id_role'],
+						'nama_petugas' => $user['nama_petugas'],
+						'gambar' => $user['gambar']
 					];
 
 					$this->session->set_userdata($data);
@@ -50,7 +53,7 @@ class Auth extends CI_Controller {
 
 		}
 
-		$this->load->view('login');
+		$this->load->view('auth/login');
 	}
 
 	public function logout()

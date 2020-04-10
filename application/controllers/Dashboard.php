@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller {
 		if (!$this->session->userdata('login')) {
 			redirect('login','refresh');
 		}
+		cek_login();
 	}
 
 	public function index()

@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <a href="index3.html" class="brand-link">
         <img src="<?php echo base_url('vendor/lte/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
         style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">SMK BBC SCHOOL</span>
       </a>
 
       <!-- Sidebar -->
@@ -50,22 +50,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="<?php echo base_url('vendor/lte/') ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <img src="<?php echo base_url('assets/img/') .  $this->session->userdata('gambar'); ?>" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block"><?php echo $this->session->userdata('nama_petugas'); ?></a>
           </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
-           <?php 
+           <?php
+
            $id_user = $this->session->userdata('id_user');
-           $user = $this->db->get_where('user', ['id_user' => $id_user])->row_array();
-           $id_role = $user['id_role'];
+           $id_role = $this->session->userdata('id_role');
 
            $sql = "SELECT * FROM role_access_menu JOIN menu USING(id_menu) WHERE role_access_menu.id_role = '$id_role' ";
            $menu = $this->db->query($sql)->result_array();
@@ -74,83 +72,109 @@ scratch. This page gets rid of all links and provides the needed markup only.
            <?php foreach ($menu as $row): ?>
 
             <?php if ($row['ada_submenu'] == 0): ?>
-              <li class="nav-item <?= $judul == $row['nama_menu'] ? 'active' : '' ?>">
-                <a href="<?php echo base_url($row['url']) ?>" class="nav-link">
+              <li class="nav-item">
+                <a href="<?php echo base_url($row['url']) ?>" class="nav-link <?= $judul == $row['nama_menu'] ? 'active' : '' ?>">
                   <i class="nav-icon fas <?php echo $row['icon'] ?>"></i>
                   <p>
                     <?php echo $row['nama_menu'] ?>
                   </p>
                 </a>
               </li>
-              <?php else: ?> 
-                <li class="nav-item has-treeview">
-                  <a href="#" class="nav-link">
-                    <i class="nav-icon fa <?php echo $row['icon'] ?>"></i>
-                    <p>
-                      <?php echo $row['nama_menu'] ?>
-                      <i class="right fas fa-angle-left"></i>
-                    </p>
+              <?php else: ?>
+
+                <?php
+
+                $cek = $this->db->get_where('menu',['nama_menu' => $judul])->row_array();
+
+                if ($cek) {
+                  $ada_submenu = $this->db->get_where('menu',['nama_menu' => $judul])->row_array()['ada_submenu'];
+                }else{
+                  $ada_submenu = $this->db->get_where('submenu',['nama_submenu' => $judul])->row_array();
+                }
+
+                if ($ada_submenu) {
+                  $this->db->join('submenu', 'id_menu');
+                  $nama_menu = $this->db->get_where('menu',['nama_submenu' => $judul])->row_array()['nama_menu']; 
+                }
+
+                ?>
+
+                <li class="nav-item has-treeview 
+                <?php 
+                if($ada_submenu){
+                  if($nama_menu == $row['nama_menu']){
+                    echo 'menu-open';
+                  }
+                } 
+                ?>">
+
+                <a href="#" class="nav-link
+                <?php 
+                if($ada_submenu){
+                  if($nama_menu == $row['nama_menu']){
+                    echo 'active';
+                  }
+                } 
+                ?>">
+                <i class="nav-icon fa <?php echo $row['icon'] ?>"></i>
+                <p>
+                  <?php echo $row['nama_menu'] ?>
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+
+               <?php 
+               $id_menu = $row['id_menu'];
+               $sql = "SELECT nama_submenu,submenu.url as url FROM submenu JOIN menu USING(id_menu) WHERE menu.id_menu = '$id_menu' ";
+               $submenu = $this->db->query($sql)->result_array();
+               ?>
+
+               <?php foreach ($submenu as $row_submenu): ?>
+                <li class="nav-item">
+                  <a href="<?php echo base_url($row_submenu['url']) ?>" class="nav-link <?= $judul == $row_submenu['nama_submenu'] ? 'active' : '' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p><?php echo $row_submenu['nama_submenu'] ?></p>
                   </a>
-                  <ul class="nav nav-treeview">
-
-                   <?php 
-                   $id_menu = $row['id_menu'];
-                   $sql = "SELECT nama_submenu,submenu.url as url FROM submenu JOIN menu USING(id_menu) WHERE menu.id_menu = '$id_menu' ";
-                   $submenu = $this->db->query($sql)->result_array();
-                   ?>
-
-                   <?php foreach ($submenu as $row_submenu): ?>
-                    <li class="nav-item">
-                      <a href="<?php echo base_url($row_submenu['url']) ?>" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p><?php echo $row_submenu['nama_submenu'] ?></p>
-                      </a>
-                    </li>
-                  <?php endforeach ?>
-                </ul>
-              </li>
-
-            <?php endif; ?>
-
-          <?php endforeach ?>
-
-          <li class="nav-item">
-            <a href="<?php echo base_url('auth/logout') ?>" class="nav-link">
-              <i class="nav-icon fas fa-sign-out-alt"></i>
-              <p>
-                Logout
-              </p>
-            </a>
+                </li>
+              <?php endforeach ?>
+            </ul>
           </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Starter Page</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+        <?php endif; ?>
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
+      <?php endforeach ?>
 
-     
+      <li class="nav-item">
+        <a href="<?php echo base_url('auth/logout') ?>" class="nav-link">
+          <i class="nav-icon fas fa-sign-out-alt"></i>
+          <p>
+            Logout
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark"><?php echo $judul ?></h1>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="container-fluid">
+

@@ -15,11 +15,18 @@
 					<div class="alert-message d-none"><?php echo $pesan ?></div>
 				<?php endif; ?>
 
+				<?php if($error =  $this->session->flashdata('error')) : ?>
+					<div class="alert-message-error d-none"><?php echo $error ?></div>
+				<?php endif; ?>
+
 				<div class="table-responsive">
 					<table class="table table-hover table-striped table-bordered" id="table-user">
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Nama Petugas</th>
+								<th>Email</th>
+								<th>Telepon</th>
 								<th>Username</th>
 								<th>Level</th>
 								<th><i class="fa fa-cogs"></i></th>
@@ -44,7 +51,36 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="<?php echo base_url('user/simpan') ?>" class="form-user">
+        <form method="POST" action="<?php echo base_url('user/simpan') ?>" class="form-user" enctype="multipart/form-data">
+        	<div class="form-group">
+        		<label for="nama_petugas">Nama</label>
+        		<input type="text" id="nama_petugas" name="nama_petugas" class="form-control nama_petugas <?php if(form_error('nama_petugas')) echo 'is-invalid'?>" placeholder="Nama" value="<?php echo set_value('nama_petugas') ?>">
+        		<?php echo form_error('nama_petugas', '<small style="color:red">','</small>') ?>
+        	</div>
+        	<div class="form-group">
+        		<label for="telepon">Telepon</label>
+        		<input type="text" id="telepon" name="telepon" class="form-control telepon <?php if(form_error('telepon')) echo 'is-invalid'?>" placeholder="Telepon" value="<?php echo set_value('telepon') ?>">
+        		<?php echo form_error('telepon', '<small style="color:red">','</small>') ?>
+        	</div>
+        	<div class="form-group">
+        		<label for="email">Email</label>
+        		<input type="text" id="email" name="email" class="form-control email <?php if(form_error('email')) echo 'is-invalid'?>" placeholder="Email" value="<?php echo set_value('email') ?>">
+        		<?php echo form_error('email', '<small style="color:red">','</small>') ?>
+        	</div>
+        	<div class="form-group">
+        		<label for="jk">Jenis Kelamin</label>
+        		<select name="jk" id="jk" class="form-control jk <?php if(form_error('jk')) echo 'is-invalid'?>">
+        			<option value="pilih_jk">-- Silahkan Pilih Jenis Kelamin --</option>
+        			<option value="L">Laki-Laki</option>
+        			<option value="P">Perempuan</option>
+        		</select>
+        		<?php echo form_error('jk', '<small style="color:red">','</small>') ?>
+        	</div>
+        	<div class="form-group">
+        		<label for="alamat">Alamat</label>
+        		<textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control alamat <?php if(form_error('alamat')) echo 'is-invalid'?>" placeholder="Alamat"></textarea>
+        		<?php echo form_error('alamat', '<small style="color:red">','</small>') ?>
+        	</div>
         	<div class="form-group">
         		<label for="username">Username</label>
         		<input type="text" id="username" name="username" class="form-control username <?php if(form_error('username')) echo 'is-invalid'?>" placeholder="Username">
@@ -64,6 +100,14 @@
 					<?php endforeach ?>
 				</select>
 				<?php echo form_error('id_role', '<small style="color:red">','</small>') ?>
+			</div>
+			<div class="form-group">
+				<label for="gambar">Gambar</label>
+				<input type="file" id="gambar" name="gambar" class="form-control gambar <?php if(form_error('gambar')) echo 'is-invalid'?>" placeholder="Gambar" value="<?php echo set_value('gambar') ?>">
+				<?php echo form_error('gambar', '<small style="color:red">','</small>') ?>
+			</div>
+			<div class="gambar-petugas mt-4">
+				<img src="" alt="Gambar Petugas" class="petugas_img" width="200">
 			</div>
       </div>
       <div class="modal-footer">

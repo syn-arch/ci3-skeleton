@@ -13,7 +13,7 @@ class Role extends CI_Controller {
 
 	public function index()
 	{
-		$data['judul'] = "Data Role";
+		$data['judul'] = "Pengaturan Akses";
 		$data['role'] = $this->rm->get_role();
 
 		$this->form_validation->set_rules('nama_role', 'Nama Role', 'required');

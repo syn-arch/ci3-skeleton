@@ -36,7 +36,11 @@ class User extends CI_Controller {
 	public function simpan()
 	{
 		$valid = $this->form_validation;
-		$valid->set_rules('username', 'Username', 'required|is_unique[user.username]');
+		$valid->set_rules('nama_petugas', 'nama petugas', 'required');
+		$valid->set_rules('telepon', 'telepon', 'required');
+		$valid->set_rules('email', 'email', 'required|is_unique[petugas.email]');
+		$valid->set_rules('alamat', 'alamat', 'required');
+		$valid->set_rules('username', 'username', 'required|is_unique[user.username]');
 		$valid->set_rules('password', 'Password', 'required|min_length[8]');
 		$valid->set_rules('id_role', 'Role', 'required');
 
@@ -54,7 +58,7 @@ class User extends CI_Controller {
 		echo json_encode($this->um->get_user($id));
 	}
 
-	public function ubah($id)
+	public function ubah($id_user, $id_petugas)
 	{
 		$valid = $this->form_validation;
 		$valid->set_rules('username', 'Username', 'is_unique[user.username]');
@@ -62,7 +66,7 @@ class User extends CI_Controller {
 		$valid->set_rules('id_role', 'Role', 'required');
 
 		if ($valid->run()) {
-			$this->um->update($id);
+			$this->um->update($id_user, $id_petugas);
 			$this->session->set_flashdata('pesan', 'diubah');
 			redirect('user','refresh');
 		}
