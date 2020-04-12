@@ -12,6 +12,8 @@ function cek_login()
         $menu = $ci->db->get_where('menu', ['url' => $ci->uri->segment(1) ])->row_array();
 
         if (!$menu) {
+            echo "menu tidak ada didatabase";
+            die;
             show_404();
         }
 

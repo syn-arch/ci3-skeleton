@@ -35,6 +35,8 @@
 <script src="<?php echo base_url('vendor/sweetalert/') ?>sweetalert.min.js"></script>
 <!-- Summernote -->
 <script src="<?php echo base_url('vendor/lte/') ?>plugins/summernote/summernote-bs4.min.js"></script>
+<!-- smartwizard -->
+<script src="<?php echo base_url('vendor/smartwizard/dist/js/') ?>jquery.smartWizard.min.js"></script>
 <!-- custom js -->
 <script src="<?php echo base_url('assets/js/') ?>script.js"></script>
 </body>

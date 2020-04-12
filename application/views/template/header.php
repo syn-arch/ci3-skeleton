@@ -21,6 +21,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/adminlte.min.css">
   <!-- summernote -->
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>plugins/summernote/summernote-bs4.css">
+  <!-- smartwizard -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/smartwizard/dist/css/') ?>smart_wizard.min.css">
+  <link rel="stylesheet" href="<?php echo base_url('vendor/smartwizard/dist/css/') ?>smart_wizard_theme_arrows.min.css">
+  <link rel="stylesheet" href="<?php echo base_url('vendor/smartwizard/dist/css/') ?>smart_wizard_theme_circles.min.css">
+  <link rel="stylesheet" href="<?php echo base_url('vendor/smartwizard/dist/css/') ?>smart_wizard_theme_dots.min.css">
   <!-- custom css -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css') ?>">
   <!-- Google Font: Source Sans Pro -->
@@ -43,7 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="#" class="brand-link">
         <img src="<?php echo base_url('vendor/lte/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
         style="opacity: .8">
         <span class="brand-text font-weight-light">SMK BBC SCHOOL</span>
@@ -57,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="<?php echo base_url('assets/img/') .  $this->session->userdata('gambar'); ?>" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $this->session->userdata('nama_petugas'); ?></a>
+            <a href="<?php echo base_url('profil') ?>" class="d-block"><?php echo $this->session->userdata('nama_petugas'); ?></a>
           </div>
         </div>
 

@@ -7,7 +7,7 @@
 					<h4>Tambah Data</h4>
 				</div>
 				<div class="float-right">
-					<a href="<?php echo base_url('master/jurusan') ?>"class="btn btn-primary tambah-jurusan"><i class="fa fa-arrow-left"></i> Kembali</a>
+					<a href="<?php echo base_url('ppdb/gelombang_pendaftaran') ?>"class="btn btn-primary tambah-jurusan"><i class="fa fa-arrow-left"></i> Kembali</a>
 				</div>
 			</div>
 			<div class="card-body">

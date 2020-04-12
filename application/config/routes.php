@@ -22,3 +22,19 @@ $route['ppdb/gelombang_pendaftaran'] = 'gelombang_pendaftaran';
 $route['ppdb/tambah_gelombang_pendaftaran'] = 'gelombang_pendaftaran/tambah';
 $route['ppdb/ubah_gelombang_pendaftaran/(:num)'] = 'gelombang_pendaftaran/ubah/$1';
 $route['ppdb/hapus_gelombang_pendaftaran/(:num)'] = 'gelombang_pendaftaran/hapus/$1';
+
+$route['ppdb/kuota_pendaftaran'] = 'kuota_pendaftaran';
+$route['ppdb/tambah_kuota_pendaftaran'] = 'kuota_pendaftaran/tambah';
+$route['ppdb/ubah_kuota_pendaftaran/(:num)'] = 'kuota_pendaftaran/ubah/$1';
+$route['ppdb/hapus_kuota_pendaftaran/(:num)'] = 'kuota_pendaftaran/hapus/$1';
+
+$route['ppdb/jalur_pendaftaran'] = 'jalur_pendaftaran';
+$route['ppdb/tambah_jalur_pendaftaran'] = 'jalur_pendaftaran/tambah';
+$route['ppdb/ubah_jalur_pendaftaran/(:num)'] = 'jalur_pendaftaran/ubah/$1';
+$route['ppdb/hapus_jalur_pendaftaran/(:num)'] = 'jalur_pendaftaran/hapus/$1';
+
+$route['ppdb/calon_siswa'] = 'calon_siswa';
+$route['ppdb/tambah_calon_siswa'] = 'calon_siswa/tambah';
+$route['ppdb/ubah_calon_siswa/(:num)'] = 'calon_siswa/ubah/$1';
+$route['ppdb/hapus_calon_siswa/(:num)'] = 'calon_siswa/hapus/$1';
+$route['ppdb/get_calon_siswa_json'] = 'calon_siswa/get_calon_siswa_json';

@@ -6,7 +6,7 @@
 					<h4>Data Calon Siswa</h4>
 				</div>
 				<div class="float-right">
-					<a href="<?php echo base_url('ppdb/tambah_calon') ?>" class="btn btn-primary tambah-calon-siswa"><i class="fa fa-plus"></i> Tambah Calon Siswa</a>
+					<a href="<?php echo base_url('ppdb/tambah_calon_siswa') ?>" class="btn btn-primary tambah-calon-siswa"><i class="fa fa-plus"></i> Tambah Calon Siswa</a>
 				</div>
 			</div>
 			<div class="card-body">
@@ -34,7 +34,6 @@
 						</thead>
 					</table>
 				</div>
-
 			</div>
 		</div>
 	</div>

@@ -5,9 +5,6 @@
 				<div class="float-left">
 					<h4 class="card-title"><?php echo $judul ?></h4>
 				</div>
-				<div class="float-right">
-					<a href="<?php echo base_url('ppdb/ppdb') ?>" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Kembali</a>
-				</div>
 			</div>
 			<div class="card-body">
 

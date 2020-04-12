@@ -1,46 +1,50 @@
 
-	$(document).ready(function(){
+$(document).ready(function(){
 
-    var base_url = $('meta[name="BASE_URL"]').attr('content')
+  var base_url = $('meta[name="BASE_URL"]').attr('content')
 
-    $('.tables').DataTable()
-    $('.textarea').summernote()
+  $('.tables').DataTable()
+  $('.textarea').summernote()
+  $('.smartwizard').smartWizard({
+    theme : "arrows"
+  });
 
-    bsCustomFileInput.init();
+  bsCustomFileInput.init();
 
-    var alert = $('.alert-message').text(), error = $('.alert-message-error').text()
+  var alert = $('.alert-message').text(), error = $('.alert-message-error').text()
 
-    if (alert != '') {
-      swal({
-        title: "Berhasil!",
-        text: "Data berhasil " + alert,
-        icon: "success",
-        timer : 1500
-      })
-    }
-
-    if (error != '') {
-     swal({
-      title: "Gagal!",
-      text: error,
-      icon: "error",
-      timer : 1500
+  if (alert != '') {
+    swal({
+      title: "Berhasil!",
+      text: "Data berhasil " + alert,
+      icon: "success",
+      timer : 1500,
+      buttons : false
     })
-   }
-
-   function hapus(href){
-     swal({
-      title: "Apakah anda yakin?",
-      text: "Data yang dihapus tidak dapat dikembalikan!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        window.location = href
-      }
-    });
   }
+
+  if (error != '') {
+   swal({
+    title: "Gagal!",
+    text: error,
+    icon: "error",
+    timer : 1500
+  })
+ }
+
+ function hapus(href){
+   swal({
+    title: "Apakah anda yakin?",
+    text: "Data yang dihapus tidak dapat dikembalikan!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      window.location = href
+    }
+  });
+}
 
         // sub menu
         $('.form-menu').click(function() {
@@ -226,10 +230,65 @@
         // tahun akademik
         $(document).on('click', '.hapus_tahun_akademik', function(){
           hapus($(this).data('href'))
+        })
 
         // gelombang pendaftaran
-        })
         $(document).on('click', '.hapus_gelombang_pendaftaran', function(){
+          hapus($(this).data('href'))
+        })
+
+        // kuota pendaftaran
+        $(document).on('click', '.hapus_kuota_pendaftaran', function(){
+          hapus($(this).data('href'))
+        })
+
+        // jalur pendaftaran
+        $(document).on('click', '.hapus_jalur_pendaftaran', function(){
+          hapus($(this).data('href'))
+        })
+
+        // calon siswa
+        $("#table-calon-siswa").dataTable({
+          initComplete: function() {
+            var api = this.api();
+            $('#mytable_filter input')
+            .off('.DT')
+            .on('input.DT', function() {
+              api.search(this.value).draw();
+            });
+          },
+          oLanguage: {
+            sProcessing: "loading..."
+          },
+          processing: true,
+          serverSide: true,
+          ajax: {"url": base_url + 'ppdb/get_calon_siswa_json', "type": "POST"},
+          columns: [
+          {"data" : null},
+          {"data": "no_pendaftaran"},
+          {"data": "nama_siswa"},
+          {"data": "jk"},
+          {"data": "telepon_hp"},
+          {"data": "asal_sekolah"},
+          {"data": null,
+          "render": function(data, type, row) {
+            return `<a class="btn btn-warning" href="${base_url}ppdb/ubah_calon_siswa/${data}"><i class="fa fa-edit"></i></a>
+           <a class="btn btn-danger hapus_calon_siswa" data-href="${base_url}ppdb/hapus_calon_siswa/${data}"><i class="fa fa-trash"></i></a>`;
+         }
+       }
+       ],
+       order: [[1, 'asc']],
+       rowCallback: function(row, data, iDisplayIndex) {
+        var info = this.fnPagingInfo();
+        var page = info.iPage;
+        var length = info.iLength;
+        var index = page * length + (iDisplayIndex + 1);
+        $('td:eq(0)', row).html(index);
+      }
+
+    });
+
+        $(document).on('click', '.hapus_calon_siswa', function(){
           hapus($(this).data('href'))
         })
 

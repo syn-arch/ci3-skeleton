@@ -33,34 +33,6 @@ class Ppdb extends CI_Controller {
 		$this->load->view('template/footer');
 	}
 
-
-	// Calon siswa
-
-	public function calon_siswa()
-	{
-		$data['judul'] = "Data Calon Siswa";
-
-		$this->load->view('template/header', $data);
-		$this->load->view('ppdb/calon_siswa', $data);
-		$this->load->view('template/footer');
-	}
-
-	public function tambah_calon()
-	{
-		$data['judul'] = "Tambah Calon Siswa";
-
-		$this->load->view('template/header', $data);
-		$this->load->view('ppdb/tambah_calon_siswa', $data);
-		$this->load->view('template/footer');
-	}
-
-	public function hapus_calon($id)
-	{
-		$this->pm->delete($id);
-		$this->session->set_flashdata('pesan', 'Dihapus');
-		redirect('ppdb','refresh');
-	}
-
 	public function proses_seleksi()
 	{
 		$data['judul'] = "Proses Seleksi";

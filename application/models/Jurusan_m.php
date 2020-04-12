@@ -6,7 +6,7 @@ class Jurusan_m extends CI_Model {
 	public function get_jurusan($id='')
 	{
 		if ($id ==  '') {
-			return $this->db->get_where('jurusan', ['id_jurusan' => 1])->result_array();
+			return $this->db->get('jurusan')->result_array();
 		}else{
 			return $this->db->get_where('jurusan', ['id_jurusan' => $id])->row_array();
 		}
