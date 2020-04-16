@@ -14,20 +14,20 @@
 				<div class="col-md-8 offset-2">
 					<form method="POST">
 						<div class="form-group">
-							<label for="id_tahun_akademi">Tahun Akademik</label>
-							<select name="id_tahun_akademi" id="id_tahun_akademi" class="form-control id_tahun_akademi <?php if(form_error('id_tahun_akademi')) echo 'is-invalid'?>">
+							<label for="id_tahun_akademik">Tahun Akademik</label>
+							<select name="id_tahun_akademik" id="id_tahun_akademik" class="form-control id_tahun_akademik <?php if(form_error('id_tahun_akademik')) echo 'is-invalid'?>">
 								<option value="">-- Silahkan Pilih Tahun Akademik --</option>
 								<?php foreach ($tahun_akademik as $row): ?>
-									<option value="<?php echo $row['id_tahun_akademi'] ?>" <?= $row['id_tahun_akademi'] == $kuota['id_tahun_akademi'] ? 'selected' : '' ?>><?php echo $row['tahun'] ?></option>
+									<option value="<?php echo $row['id_tahun_akademik'] ?>" <?= $row['id_tahun_akademik'] == $kuota['id_tahun_akademik'] ? 'selected' : '' ?>><?php echo $row['tahun'] ?></option>
 								<?php endforeach ?>
 							</select>
-							<?php echo form_error('id_tahun_akademi', '<small style="color:red">','</small>') ?>
+							<?php echo form_error('id_tahun_akademik', '<small style="color:red">','</small>') ?>
 						</div>
 						<div class="form-group">
 							<label for="id_jalur_pendaftaran">Jalur Pendaftaran</label>
 							<select name="id_jalur_pendaftaran" id="id_jalur_pendaftaran" class="form-control id_jalur_pendaftaran <?php if(form_error('id_jalur_pendaftaran')) echo 'is-invalid'?>">
 								<option value="">-- Silahkan Pilih Jalur Pendaftaran --</option>
-								<?php foreach ($jalu_pendaftaran as $row): ?>
+								<?php foreach ($jalur_pendaftaran as $row): ?>
 									<option value="<?php echo $row['id_jalur_pendaftaran'] ?>" <?= $row['id_jalur_pendaftaran'] == $kuota['id_jalur_pendaftaran'] ? 'selected' : '' ?>><?php echo $row['nama_jalur_pendaftaran'] ?></option>
 								<?php endforeach ?>
 							</select>
@@ -38,7 +38,7 @@
 							<select name="id_jurusan" id="id_jurusan" class="form-control id_jurusan <?php if(form_error('id_jurusan')) echo 'is-invalid'?>">
 								<option value="">-- Silahkan Pilih Jurusan --</option>
 								<?php foreach ($jurusan as $row): ?>
-									<option value="<?php echo $row['id_jurusan'] ?>"> <?= $row['id_jurusan'] == $kuota['id_jurusan'] ? 'selected' : '' ?><?php echo $row['nama_jurusan'] ?></option>
+									<option value="<?php echo $row['id_jurusan'] ?>" <?= $row['id_jurusan'] == $kuota['id_jurusan'] ? 'selected' : '' ?>><?php echo $row['nama_jurusan'] ?></option>
 								<?php endforeach ?>
 							</select>
 							<?php echo form_error('id_jurusan', '<small style="color:red">','</small>') ?>
