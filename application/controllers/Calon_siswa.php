@@ -9,6 +9,8 @@ class Calon_siswa extends CI_Controller {
 		$this->load->library('datatables');
 		$this->load->model('Siswa_m','sm');
 		$this->load->model('Jurusan_m','jm');
+		$this->load->model('Jalur_pendaftaran_m','jpm');
+		$this->load->model('Gelombang_pendaftaran_m','gpm');
 		cek_login();
 	}
 
@@ -16,6 +18,7 @@ class Calon_siswa extends CI_Controller {
 	{
 		$data['judul'] = "Data Calon Siswa";
 		$data['calon_siswa'] = $this->sm->get_siswa(true);
+
 
 		$this->load->view('template/header', $data);
 		$this->load->view('ppdb/calon_siswa/index', $data);
@@ -63,6 +66,8 @@ class Calon_siswa extends CI_Controller {
 		$valid->set_rules('jumlah_saudara_kandung','jumlah saudara kandung','required');
 		$valid->set_rules('jarak_tempuh','jarak tempuh','required');
 		$valid->set_rules('id_jurusan','kompetensi keahlian','required');
+		$valid->set_rules('id_jalur_pendaftaran','jalur pendaftaran','required');
+		$valid->set_rules('id_gelombang_pendaftaran','gelombang pendaftaran','required');
 		$valid->set_rules('jenis_pendaftaran','jenis pendaftaran','required');
 		$valid->set_rules('nis','nis','required');
 		$valid->set_rules('tgl_masuk_sekolah','tanngal masuk sekolah','required');
@@ -70,6 +75,40 @@ class Calon_siswa extends CI_Controller {
 		$valid->set_rules('no_peserta_ujian','no peserta ujian','required');
 		$valid->set_rules('ijazah','ijazah','required');
 		$valid->set_rules('skhu','skhu','required');
+		$valid->set_rules('kebutuhan_khusus','kebutuhan_khusus','required');
+		$valid->set_rules('moda_transportasi','moda transportasi','required');
+		if (empty($_FILES['gambar']['name']))
+		{
+			$valid->set_rules('gambar', 'Foto', 'required');
+		}
+		if (empty($_FILES['foto_identitas_raport']['name']))
+		{
+			$valid->set_rules('foto_identitas_raport', 'Foto', 'required');
+		}
+		if (empty($_FILES['foto_selfie_raport']['name']))
+		{
+			$valid->set_rules('foto_selfie_raport', 'Foto', 'required');
+		}
+		if (empty($_FILES['raport_semester_1']['name']))
+		{
+			$valid->set_rules('raport_semester_1', 'Foto', 'required');
+		}
+		if (empty($_FILES['raport_semester_2']['name']))
+		{
+			$valid->set_rules('raport_semester_2', 'Foto', 'required');
+		}
+		if (empty($_FILES['raport_semester_3']['name']))
+		{
+			$valid->set_rules('raport_semester_3', 'Foto', 'required');
+		}
+		if (empty($_FILES['raport_semester_4']['name']))
+		{
+			$valid->set_rules('raport_semester_4', 'Foto', 'required');
+		}
+		if (empty($_FILES['raport_semester_5']['name']))
+		{
+			$valid->set_rules('raport_semester_5', 'Foto', 'required');
+		}
 
 		if ($valid->run()) {
 			$this->sm->insert();
@@ -79,6 +118,8 @@ class Calon_siswa extends CI_Controller {
 
 		$data['judul'] = "Tambah Calon Siswa";
 		$data['jurusan'] = $this->jm->get_jurusan();
+		$data['jalur'] = $this->jpm->get_jalur_pendaftaran();
+		$data['gelombang'] = $this->gpm->get_gelombang_pendaftaran();
 
 		$this->load->view('template/header', $data);
 		$this->load->view('ppdb/calon_siswa/tambah', $data);

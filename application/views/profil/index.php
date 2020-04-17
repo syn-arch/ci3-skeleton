@@ -6,7 +6,7 @@
 			</div>
 			<div class="card-body">
 				<div class="text-center">
-					<img src="<?php echo base_url('assets/img/') . $profil['gambar'] ?>" alt="User Image" class="img-fluid mb-3" width="200">
+					<img src="<?php echo base_url('assets/img/petugas/') . $profil['gambar'] ?>" alt="User Image" class="img-fluid mb-3" width="200">
 					<h5><?php echo $profil['nama_petugas'] ?></h5>
 					<small><?php echo $profil['nama_role'] ?></small>
 				</div>

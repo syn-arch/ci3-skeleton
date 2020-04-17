@@ -37,13 +37,15 @@ class Profil_m extends CI_Model {
 		$data = [
 			'nama_petugas' => $post['nama_petugas'],
 			'alamat' => $post['alamat'],
-			'email' => $post['email'],
 			'telepon' => $post['telepon'],
 			'jk' => $post['jk']
 		];
 
 		$this->db->where('id_petugas', $id_petugas);
 		$this->db->update('petugas', $data);
+
+		$this->db->where('id_user', $id_user);
+		$this->db->update('user', ['email' => $post['email']]);
 	}
 
 	public function update_login()

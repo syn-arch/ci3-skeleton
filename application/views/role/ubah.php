@@ -26,8 +26,8 @@
 												<td><?php echo $row_submenu['nama_submenu'] ?></td>
 												<td>
 													<div class="custom-control custom-checkbox">
-														<input <?= check_submenu($id_role, $row_submenu['id_submenu']) ?> data-id_submenu="<?php echo $row_submenu['id_submenu'] ?>" data-id_role="<?php echo $id_role ?>" class="form-sub custom-control-input" type="checkbox" id="<?php echo $row_submenu['id_submenu'] ?>" data-id="">
-														<label for="<?php echo $row_submenu['id_submenu'] ?>" class="custom-control-label"><i class="fa fa-check"></i></label>
+														<input <?= check_submenu($id_role, $row_submenu['id_submenu']) ?> data-id_submenu="<?php echo $row_submenu['id_submenu'] ?>" data-id_role="<?php echo $id_role ?>" class="form-sub custom-control-input" type="checkbox" id="<?php echo $row_submenu['nama_submenu'] ?>">
+														<label for="<?php echo $row_submenu['nama_submenu'] ?>" class="custom-control-label"><i class="fa fa-check"></i></label>
 													</div>
 												</td>
 											</tr>
@@ -36,8 +36,8 @@
 								</td>
 								<td>
 									<div class="custom-control custom-checkbox">
-										<input <?= check_menu($id_role, $row['id_menu']) ?> data-id_menu="<?php echo $row['id_menu'] ?>" data-id_role="<?php echo $id_role ?>" class="form-menu custom-control-input access_menu" type="checkbox" data-id="" id="<?php echo $row['id_menu'] ?>">
-										<label for="<?php echo $row['id_menu'] ?>" class="custom-control-label"><i class="fa fa-check"></i></label>
+										<input <?= check_menu($id_role, $row['id_menu']) ?> data-id_menu="<?php echo $row['id_menu'] ?>" data-id_role="<?php echo $id_role ?>" class="form-menu custom-control-input access_menu" type="checkbox" id="<?php echo $row['nama_menu'] ?>">
+										<label for="<?php echo $row['nama_menu'] ?>" class="custom-control-label"><i class="fa fa-check"></i></label>
 									</div>
 								</td>
 							</tr>

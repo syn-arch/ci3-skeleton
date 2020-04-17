@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
 
 $route['login'] = 'auth';
 
@@ -17,6 +17,24 @@ $route['master/tahun_akademik'] = 'tahun_akademik';
 $route['master/tambah_tahun_akademik'] = 'tahun_akademik/tambah';
 $route['master/ubah_tahun_akademik/(:num)'] = 'tahun_akademik/ubah/$1';
 $route['master/hapus_tahun_akademik/(:num)'] = 'tahun_akademik/hapus/$1';
+
+$route['konten/konten'] = 'konten';
+
+$route['konten/slider'] = 'slider';
+$route['konten/tambah_slider'] = 'slider/tambah';
+$route['konten/ubah_slider/(:num)'] = 'slider/ubah/$1';
+$route['konten/hapus_slider/(:num)'] = 'slider/hapus/$1';
+
+$route['konten/kontak'] = 'kontak';
+$route['konten/tambah_kontak'] = 'kontak/tambah';
+$route['konten/ubah_kontak/(:num)'] = 'kontak/ubah/$1';
+$route['konten/hapus_kontak/(:num)'] = 'kontak/hapus/$1';
+
+$route['konten/berita'] = 'berita';
+$route['konten/tambah_berita'] = 'berita/tambah';
+$route['konten/ubah_berita/(:num)'] = 'berita/ubah/$1';
+$route['konten/hapus_berita/(:num)'] = 'berita/hapus/$1';
+$route['konten/get_berita_json'] = 'berita/get_berita_json';
 
 $route['ppdb/gelombang_pendaftaran'] = 'gelombang_pendaftaran';
 $route['ppdb/tambah_gelombang_pendaftaran'] = 'gelombang_pendaftaran/tambah';

@@ -27,7 +27,6 @@
 								<th>Nama Petugas</th>
 								<th>Email</th>
 								<th>Telepon</th>
-								<th>Username</th>
 								<th>Level</th>
 								<th><i class="fa fa-cogs"></i></th>
 							</tr>
@@ -81,16 +80,16 @@
         		<textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control alamat <?php if(form_error('alamat')) echo 'is-invalid'?>" placeholder="Alamat"></textarea>
         		<?php echo form_error('alamat', '<small style="color:red">','</small>') ?>
         	</div>
-        	<div class="form-group">
-        		<label for="username">Username</label>
-        		<input type="text" id="username" name="username" class="form-control username <?php if(form_error('username')) echo 'is-invalid'?>" placeholder="Username">
-        		<?php echo form_error('username', '<small style="color:red">','</small>') ?>
+        	<div class="form-group pw1">
+        		<label for="pw1">Password</label>
+        		<input type="password" id="pw1" name="pw1" class="form-control pw1 <?php if(form_error('pw1')) echo 'is-invalid'?>" placeholder="Password">
+        		<?php echo form_error('pw1', '<small style="color:red">','</small>') ?>
         	</div>
-        	<div class="form-group">
-        		<label for="password">Password</label>
-        		<input type="password" id="password" name="password" class="form-control password <?php if(form_error('password')) echo 'is-invalid'?>" placeholder="Password">
-        		<?php echo form_error('password', '<small style="color:red">','</small>') ?>
-        	</div>
+            <div class="form-group pw2">
+                <label for="pw2">Konfirmasi Password</label>
+                <input type="password" id="pw2" name="pw2" class="form-control pw2 <?php if(form_error('pw2')) echo 'is-invalid'?>" placeholder="Konfirmasi Password">
+                <?php echo form_error('pw2', '<small style="color:red">','</small>') ?>
+            </div>
 			<div class="form-group">
 				<label for="id_role">Role</label>
 				<select name="id_role" id="id_role" class="form-control id_role">
@@ -101,6 +100,24 @@
 				</select>
 				<?php echo form_error('id_role', '<small style="color:red">','</small>') ?>
 			</div>
+            <div class="form-group">
+                <label for="petugas">Petugas ?</label>
+                <select name="petugas" id="petugas" class="form-control petugas <?php if(form_error('petugas')) echo 'is-invalid'?>">
+                    <option value="0">TIDAK</option>
+                    <option value="1">IYA</option>
+                </select>
+                <?php echo form_error('petugas', '<small style="color:red">','</small>') ?>
+            </div>
+            <div class="form-group jurusan-petugas">
+                <label for="id_jurusan">Jurusan</label>
+                <select name="id_jurusan" id="id_jurusan" class="form-control id_jurusan">
+                    <option value="pilih_jurusan">-- Silahkan Pilih jurusan --</option>
+                    <?php foreach ($jurusan as $row): ?>
+                        <option value="<?php echo $row['id_jurusan'] ?>"><?php echo $row['nama_jurusan'] ?></option>
+                    <?php endforeach ?>
+                </select>
+                <?php echo form_error('id_role', '<small style="color:red">','</small>') ?>
+            </div>
 			<div class="form-group">
 				<label for="gambar">Gambar</label>
 				<input type="file" id="gambar" name="gambar" class="form-control gambar <?php if(form_error('gambar')) echo 'is-invalid'?>" placeholder="Gambar" value="<?php echo set_value('gambar') ?>">

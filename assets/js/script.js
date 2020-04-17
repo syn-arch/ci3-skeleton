@@ -3,6 +3,28 @@ $(document).ready(function(){
 
   var base_url = $('meta[name="BASE_URL"]').attr('content')
 
+  $('.sebutkan_jarak_tempuh').hide()
+  $('.jurusan-petugas').hide()
+
+
+  $('.jarak_tempuh').change(function(){
+    var data = $(this).val()
+    if(data == 'Lebih dari 1 KM'){
+      $('.sebutkan_jarak_tempuh').show()
+    }else{
+      $('.sebutkan_jarak_tempuh').hide()
+    }
+  })
+
+  $('.petugas').change(function(){
+    var data = $(this).val()
+    if(data == '1'){
+      $('.jurusan-petugas').show()
+    }else{
+      $('.jurusan-petugas').hide()
+    }
+  })
+
   $('.tables').DataTable()
   $('.textarea').summernote()
   $('.smartwizard').smartWizard({
@@ -120,7 +142,6 @@ $(document).ready(function(){
           {"data": "nama_petugas"},
           {"data": "email"},
           {"data": "telepon"},
-          {"data": "username"},
           {"data": "nama_role"},
           {"data": "id_user",
           "render": function(data, type, row) {
@@ -148,15 +169,17 @@ $(document).ready(function(){
         	$('.modal-title').text('Tambah User')
         	$('.form-user').attr('action', base_url + "user/simpan")
         	$('.nama_petugas').val('')
-          $('.email').val('')
           $('.telepon').val('')
           $('.alamat').val('')
           $('.jk').val('pilih_jk')
           $('.petugas_img').hide()
-          $('.username').val('')
           $('.password').val('')
+          $('.email').val('')
           $('.username').prop('disabled', false)
           $('.id_role').val('pilih_role')
+          $('.id_jurusan').val('pilih_jurusan')
+          $('.pw1').show()
+          $('.pw2').show()
         })
 
         $(document).on('click', '.ubah_user', function(){
@@ -167,15 +190,21 @@ $(document).ready(function(){
         		$('.form-user').attr('action', base_url + "user/ubah/" + data.id_user + '/' + data.id_petugas)
         		$('.nama_petugas').val(data.nama_petugas)
             $('.alamat').val(data.alamat)
-            $('.email').val(data.email)
             $('.telepon').val(data.telepon)
             $('.jk').val(data.jk)
-            $('.username').val(data.username)
+            $('.petugas').val(data.petugas)
+            if (data.petugas == 1) {
+              $('.jurusan-petugas').show()
+              $('.id_jurusan').val(data.id_jurusan)
+            }
+            $('.email').val(data.email)
             $('.username').prop('disabled', true)
             $('.password').attr('')
             $('.petugas_img').show()
-            $('.petugas_img').attr('src', base_url + "assets/img/" + data.gambar)
+            $('.petugas_img').attr('src', base_url + "assets/img/petugas/" + data.gambar)
             $('.id_role').val(data.id_role)
+            $('.pw1').hide()
+            $('.pw2').hide()
           })
         })
 
@@ -270,25 +299,37 @@ $(document).ready(function(){
           {"data": "jk"},
           {"data": "telepon_hp"},
           {"data": "asal_sekolah"},
-          {"data": null,
+          {"data": "id_siswa",
           "render": function(data, type, row) {
             return `<a class="btn btn-warning" href="${base_url}ppdb/ubah_calon_siswa/${data}"><i class="fa fa-edit"></i></a>
-           <a class="btn btn-danger hapus_calon_siswa" data-href="${base_url}ppdb/hapus_calon_siswa/${data}"><i class="fa fa-trash"></i></a>`;
-         }
-       }
-       ],
-       order: [[1, 'asc']],
-       rowCallback: function(row, data, iDisplayIndex) {
-        var info = this.fnPagingInfo();
-        var page = info.iPage;
-        var length = info.iLength;
-        var index = page * length + (iDisplayIndex + 1);
-        $('td:eq(0)', row).html(index);
-      }
+            <a class="btn btn-danger hapus_calon_siswa" data-href="${base_url}ppdb/hapus_calon_siswa/${data}"><i class="fa fa-trash"></i></a>`;
+          }
+        }
+        ],
+        order: [[1, 'asc']],
+        rowCallback: function(row, data, iDisplayIndex) {
+          var info = this.fnPagingInfo();
+          var page = info.iPage;
+          var length = info.iLength;
+          var index = page * length + (iDisplayIndex + 1);
+          $('td:eq(0)', row).html(index);
+        }
 
-    });
+      });
 
         $(document).on('click', '.hapus_calon_siswa', function(){
+          hapus($(this).data('href'))
+        })
+
+        $(document).on('click', '.hapus_slider', function(){
+          hapus($(this).data('href'))
+        })
+
+        $(document).on('click', '.hapus_kontak', function(){
+          hapus($(this).data('href'))
+        })
+
+        $(document).on('click', '.hapus_berita', function(){
           hapus($(this).data('href'))
         })
 

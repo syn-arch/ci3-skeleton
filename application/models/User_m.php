@@ -22,8 +22,11 @@ class User_m extends CI_Model {
 		return $this->datatables->generate();
 	}
 
-	public function delete($id='')
-	{
+	public function delete($id_user='')
+	{	
+					$this->db->join('petugas', 'id_user');
+		$gb_lama = $this->db->get_where('user',['id_user' => $id])->row_array()['gambar'];
+		unlink(FCPATH . 'assets/img/petugas/' . $gb_lama);
 		$this->db->delete('user', ['id_user' => $id]);
 	}
 
@@ -48,23 +51,32 @@ class User_m extends CI_Model {
 	{
 		$post = $this->input->post();
 
+		$data = [
+			'email' => $post['email'],
+			'id_role' => $post['id_role'],
+			'petugas' => $post['petugas'],
+			'id_jurusan' => $post['id_jurusan'],
+			'password' => password_hash($post['pw1'], PASSWORD_DEFAULT)
+		];
+
+		$user = $this->db->insert('user', $data);
+
+		var_dump($user);
+		die;
+
+
 		$data_petugas = [
+			'id_user' => $user['id_user'],
 			'nama_petugas' => $post['nama_petugas'],
 			'alamat' => $post['alamat'],
-			'email' => $post['email'],
 			'telepon' => $post['telepon'],
+			'jk' => $post['jk'],
 			'gambar' => $this->_upload_petugas()
 		];
 
 		$this->db->insert('petugas', $data_petugas);
 
-		$data = [
-			'username' => $post['username'],
-			'id_role' => $post['id_role'],
-			'password' => password_hash($post['password'], PASSWORD_DEFAULT)
-		];
-
-		$this->db->insert('user', $data);
+		
 	}
 
 	public function update($id_user, $id_petugas)
@@ -73,25 +85,24 @@ class User_m extends CI_Model {
 
 		$data_petugas = [
 			'nama_petugas' => $post['nama_petugas'],
-			'alamat' => $post['alamat'],
-			'email' => $post['email'],
-			'telepon' => $post['telepon']
+			'alamat' => $post['alamat'],		
+			'telepon' => $post['telepon'],
+			'jk' => $post['jk']
 		];
 
 		if ($_FILES['gambar']['name']) {
 			$gb_lama = $this->db->get_where('petugas',['id_petugas' => $id_petugas])->row_array()['gambar'];
-			unlink(FCPATH . 'assets/' . $gb_lama);
+			unlink(FCPATH . 'assets/petugas/' . $gb_lama);
 			$data_petugas['gambar'] = $this->_upload_petugas();
 		}
 
 		$this->db->where('id_petugas', $id_petugas);
 		$this->db->update('petugas', $data_petugas);
 
-		$data = ['id_role' => $post['id_role']];
-
-		if ($post['password'] != '') {
-			$data['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
-		}
+		$data['id_role'] =  $post['id_role'];
+		$data['email'] =  $post['email'];
+		$data['petugas'] =  $post['petugas'];
+		$data['id_jurusan'] =  $post['id_jurusan'];
 
 		$this->db->where('id_user', $id_user);
 		$this->db->update('user', $data);

@@ -39,6 +39,8 @@ class profil_sekolah_m extends CI_Model {
 		];
 
 		if ($_FILES['logo']['name']) {
+			$gb_lama = $this->db->get('profil_sekolah')->row_array()['logo'];
+			unlink(FCPATH . '/assets/img/' . $gb_lama);
 			$data['logo'] = $this->_upload_logo();
 		}
 

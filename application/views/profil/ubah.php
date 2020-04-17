@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="card card-primary card-outline">
 			<div class="card-header">
 				<div class="float-left">
@@ -19,7 +19,7 @@
 					<div class="alert-message-error d-none"><?php echo $error ?></div>
 				<?php endif; ?>
 
-				<div class="col-md-12">
+				<div class="col-md-8 offset-2">
 					<form method="POST">
 						<div class="form-group">
 							<label for="nama_petugas">Nama</label>
@@ -55,25 +55,6 @@
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="card card-primary card-outline">
-			<div class="card-header">
-				<h4 class="card-title">Data Login</h4>
-			</div>
-			<div class="card-body">
-				<form method="POST" action="<?php echo base_url('profil/ubah_login') ?>">
-					<div class="form-group">
-						<label for="username">Username</label>
-						<input type="text" id="username" name="username" class="form-control username <?php if(form_error('username')) echo 'is-invalid'?>" placeholder="Username" value="<?php echo $profil['username'] ?>">
-						<?php echo form_error('username', '<small style="color:red">','</small>') ?>
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block">Submit</button>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
