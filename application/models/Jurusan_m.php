@@ -13,7 +13,7 @@ class Jurusan_m extends CI_Model {
 	}
 
 	function get_all_jurusan() {
-		$this->datatables->select('*');
+		$this->datatables->select('nama_jurusan, singkatan, id_jurusan');
 		$this->datatables->from('jurusan');
 		return $this->datatables->generate();
 	}

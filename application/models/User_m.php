@@ -15,7 +15,7 @@ class User_m extends CI_Model {
 	}
 
 	function get_all_user() {
-		$this->datatables->select('*');
+		$this->datatables->select('id_user, nama_petugas, email, telepon, nama_role');
 		$this->datatables->from('user');
 		$this->datatables->join('role', 'id_role');
 		$this->datatables->join('petugas', 'id_user');

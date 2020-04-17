@@ -45,7 +45,7 @@ class Siswa_m extends CI_Model {
 
 	function get_all_siswa($calon_siswa = false) {
 		if ($calon_siswa == true) {
-			$this->datatables->select('*');
+			$this->datatables->select('id_siswa, nama_siswa, telepon_hp, jk, asal_sekolah, no_pendaftaran');
 			$this->datatables->where('calon_siswa', 1);
 			$this->datatables->from('siswa');
 			return $this->datatables->generate();

@@ -20,7 +20,7 @@
 				<?php endif; ?>
 
 				<div class="table-responsive">
-					<table class="table table-hover table-striped table-borderedt tables">
+					<table class="table table-hover table-striped table-borderedt" id="table-berita">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -31,25 +31,6 @@
 								<th><i class="fa fa-cogs"></i></th>
 							</tr>
 						</thead>
-						<tbody>
-							<?php $no=1; foreach ($berita as $row): ?>
-								<tr>
-									<td><?php echo $no++ ?></td>
-									<td><?php echo date('d-m-Y H:i:s', strtotime($row['tgl'])) ?></td>
-									<td><?php echo $row['nama_petugas'] ?></td>
-									<td><?php echo $row['judul'] ?></td>
-									<td><?php echo $row['status'] ?></td>
-									<td>
-										<a href="<?php echo base_url('konten/ubah_berita/') . $row['id_berita'] ?>" class="btn btn-warning">
-											<i class="fa fa-edit"></i>
-										</a>
-										<a data-href="<?php echo base_url('konten/hapus_berita/') . $row['id_berita'] ?>" class="btn btn-danger hapus_berita">
-											<i class="fa fa-trash"></i>
-										</a>
-									</td>
-								</tr>
-							<?php endforeach ?>
-						</tbody>
 					</table>
 				</div>
 

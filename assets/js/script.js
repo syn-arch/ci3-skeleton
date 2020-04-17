@@ -108,61 +108,41 @@ $(document).ready(function(){
           });
         });
 
-        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-        {
-        	return {
-        		"iStart": oSettings._iDisplayStart,
-        		"iEnd": oSettings.fnDisplayEnd(),
-        		"iLength": oSettings._iDisplayLength,
-        		"iTotal": oSettings.fnRecordsTotal(),
-        		"iFilteredTotal": oSettings.fnRecordsDisplay(),
-        		"iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-        		"iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-        	};
-        };
-
-        // role
-        $("#table-user").dataTable({
-        	initComplete: function() {
-        		var api = this.api();
-        		$('#mytable_filter input')
-        		.off('.DT')
-        		.on('input.DT', function() {
-        			api.search(this.value).draw();
-        		});
-        	},
-        	oLanguage: {
-        		sProcessing: "loading..."
-        	},
-        	processing: true,
-        	serverSide: true,
-        	ajax: {"url": base_url + "user/get_user_json", "type": "POST"},
-        	columns: [
-          {"data" : null},
+        // user
+        var table_user = $('#table-user').DataTable({ 
+          "processing": true,
+          "serverSide": true,
+          "order": [],
+          "ajax": {
+            "url": base_url + "user/get_user_json",
+            "type": "POST"
+          },
+          "columns": [
+          {"data" : "id_user"},
           {"data": "nama_petugas"},
           {"data": "email"},
           {"data": "telepon"},
           {"data": "nama_role"},
-          {"data": "id_user",
-          "render": function(data, type, row) {
-           return `<a class="btn btn-warning ubah_user" href="#modal-user" data-toggle="modal" data-id='${data}'><i class="fa fa-edit"></i></a>
-           <a class="btn btn-danger hapus_user" data-href="${base_url}user/hapus/${data}"><i class="fa fa-trash"></i></a>`;
-         }
-       }
-       ],
-       order: [[1, 'asc']],
-       rowCallback: function(row, data, iDisplayIndex) {
-        var info = this.fnPagingInfo();
-        var page = info.iPage;
-        var length = info.iLength;
-        var index = page * length + (iDisplayIndex + 1);
-        $('td:eq(0)', row).html(index);
-      }
+          {
+            "data": "id_user",
+            "render" : function(data, type, row) {
+              return `<a class="btn btn-warning ubah_user" href="#modal-user" data-toggle="modal" data-id="${data}"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-danger hapus_user" data-href="${base_url}user/hapus_user/${data}"><i class="fa fa-trash"></i></a>`
+            }
+          }
+          ],
+        });
 
-    });
+        table_user.on('order.dt search.dt draw.dt', function () {
+            var start = table_user.page.info().start;
+            var info = table_user.page.info();
+            table_user.column(0, {order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = start+i+1;
+            } );
+        } ).draw();
 
         $(document).on('click', '.hapus_user', function(){
-        	hapus($this.data('href'))
+        	hapus($(this).data('href'))
         })
 
         $('.tambah-user').click(function(){
@@ -215,42 +195,36 @@ $(document).ready(function(){
         })
 
         // jurusan
-        $("#table-jurusan").dataTable({
-          initComplete: function() {
-            var api = this.api();
-            $('#mytable_filter input')
-            .off('.DT')
-            .on('input.DT', function() {
-              api.search(this.value).draw();
-            });
+        var table_jurusan = $('#table-jurusan').DataTable({ 
+          "processing": true,
+          "serverSide": true,
+          "order": [],
+          "ajax": {
+            "url": base_url + "master/get_jurusan_json",
+            "type": "POST"
           },
-          oLanguage: {
-            sProcessing: "loading..."
-          },
-          processing: true,
-          serverSide: true,
-          ajax: {"url": base_url + 'master/get_jurusan_json', "type": "POST"},
-          columns: [
-          {"data" : null},
+          "columns": [
+          {"data" : "id_jurusan"},
           {"data": "nama_jurusan"},
           {"data": "singkatan"},
-          {"data": "id_jurusan",
-          "render": function(data, type, row) {
-           return `<a class="btn btn-warning" href="${base_url}master/ubah_jurusan/${data}"><i class="fa fa-edit"></i></a>
-           <a class="btn btn-danger hapus_jurusan" data-href="${base_url}master/hapus_jurusan/${data}"><i class="fa fa-trash"></i></a>`;
-         }
-       }
-       ],
-       order: [[1, 'asc']],
-       rowCallback: function(row, data, iDisplayIndex) {
-        var info = this.fnPagingInfo();
-        var page = info.iPage;
-        var length = info.iLength;
-        var index = page * length + (iDisplayIndex + 1);
-        $('td:eq(0)', row).html(index);
-      }
+          {
+            "data": "id_jurusan",
+            "render" : function(data, type, row) {
+              return `<a class="btn btn-warning ubah_jurusan" href="${base_url}master/ubah_jurusan/${data}"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-danger hapus_jurusan" data-href="${base_url}jurusan/hapus_user/${data}"><i class="fa fa-trash"></i></a>`
+            }
+          }
+          ],
+        });
 
-    });
+        table_jurusan.on('order.dt search.dt draw.dt', function () {
+            var start = table_jurusan.page.info().start;
+            var info = table_jurusan.page.info();
+            table_jurusan.column(0, {order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = start+i+1;
+            } );
+        } ).draw();
+
 
         $(document).on('click', '.hapus_jurusan', function(){
           hapus($(this).data('href'))
@@ -277,45 +251,38 @@ $(document).ready(function(){
         })
 
         // calon siswa
-        $("#table-calon-siswa").dataTable({
-          initComplete: function() {
-            var api = this.api();
-            $('#mytable_filter input')
-            .off('.DT')
-            .on('input.DT', function() {
-              api.search(this.value).draw();
-            });
+       var table_calon_siswa = $('#table-calon-siswa').DataTable({ 
+          "processing": true,
+          "serverSide": true,
+          "order": [],
+          "ajax": {
+            "url": base_url + "ppdb/get_calon_siswa_json",
+            "type": "POST"
           },
-          oLanguage: {
-            sProcessing: "loading..."
-          },
-          processing: true,
-          serverSide: true,
-          ajax: {"url": base_url + 'ppdb/get_calon_siswa_json', "type": "POST"},
-          columns: [
-          {"data" : null},
+          "columns": [
+          {"data" : "id_siswa"},
           {"data": "no_pendaftaran"},
           {"data": "nama_siswa"},
           {"data": "jk"},
           {"data": "telepon_hp"},
           {"data": "asal_sekolah"},
-          {"data": "id_siswa",
-          "render": function(data, type, row) {
-            return `<a class="btn btn-warning" href="${base_url}ppdb/ubah_calon_siswa/${data}"><i class="fa fa-edit"></i></a>
-            <a class="btn btn-danger hapus_calon_siswa" data-href="${base_url}ppdb/hapus_calon_siswa/${data}"><i class="fa fa-trash"></i></a>`;
+          {
+            "data": "id_siswa",
+            "render" : function(data, type, row) {
+              return `<a class="btn btn-warning ubah_calon_siswa" href="${base_url}ppdb/ubah_calon_siswa/${data}"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-danger hapus_calon_siswa" data-href="${base_url}ppdb/hapus_calon_siswa/${data}"><i class="fa fa-trash"></i></a>`
+            }
           }
-        }
-        ],
-        order: [[1, 'asc']],
-        rowCallback: function(row, data, iDisplayIndex) {
-          var info = this.fnPagingInfo();
-          var page = info.iPage;
-          var length = info.iLength;
-          var index = page * length + (iDisplayIndex + 1);
-          $('td:eq(0)', row).html(index);
-        }
+          ],
+        });
 
-      });
+        table_calon_siswa.on('order.dt search.dt draw.dt', function () {
+            var start = table_calon_siswa.page.info().start;
+            var info = table_calon_siswa.page.info();
+            table_calon_siswa.column(0, {order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = start+i+1;
+            } );
+        } ).draw();
 
         $(document).on('click', '.hapus_calon_siswa', function(){
           hapus($(this).data('href'))
@@ -328,6 +295,39 @@ $(document).ready(function(){
         $(document).on('click', '.hapus_kontak', function(){
           hapus($(this).data('href'))
         })
+
+        // berita
+        var table_berita = $('#table-berita').DataTable({ 
+          "processing": true,
+          "serverSide": true,
+          "order": [],
+          "ajax": {
+            "url": base_url + "konten/get_berita_json",
+            "type": "POST"
+          },
+          "columns": [
+          {"data" : "id_berita"},
+          {"data": "tgl"},
+          {"data": "nama_petugas"},
+          {"data": "judul"},
+          {"data": "status"},
+          {
+            "data": "id_berita",
+            "render" : function(data, type, row) {
+              return `<a class="btn btn-warning ubah_berita" href="${base_url}konten/ubah_berita/${data}"><i class="fa fa-edit"></i></a>
+              <a class="btn btn-danger hapus_berita" data-href="${base_url}konten/hapus_berita/${data}"><i class="fa fa-trash"></i></a>`
+            }
+          }
+          ],
+        });
+
+        table_berita.on('order.dt search.dt draw.dt', function () {
+            var start = table_berita.page.info().start;
+            var info = table_berita.page.info();
+            table_berita.column(0, {order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = start+i+1;
+            } );
+        } ).draw();
 
         $(document).on('click', '.hapus_berita', function(){
           hapus($(this).data('href'))

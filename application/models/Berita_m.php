@@ -37,7 +37,9 @@ class berita_m extends CI_Model {
 	}
 
 	function get_all_berita() {
-		$this->datatables->select('*');
+		$this->datatables->join('user', 'id_user');
+		$this->datatables->join('petugas', 'petugas.id_user = user.id_user');
+		$this->datatables->select('id_berita, nama_petugas, judul, status, tgl');
 		$this->datatables->from('berita');
 		return $this->datatables->generate();
 	}
